@@ -3,8 +3,8 @@ extends _base.pug
 block head
 	- if(global.plugins.dynamic !== undefined)
 		script !{post.pluginsData.dynamic.injectionScript}
-  	title #{post.title}: #{locale.blogTitle}
-
+	title #{post.title}: #{locale.blogTitle}
+	meta(name='keyword') #{post.tags.join()}
 mixin post(post)
 	.item
 		.content
