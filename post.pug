@@ -1,0 +1,50 @@
+extends _base.pug
+
+block head
+	- if(global.plugins.dynamic !== undefined)
+		script !{post.pluginsData.dynamic.injectionScript}
+  	title #{post.title}: #{locale.blogTitle}
+
+mixin post(post)
+	.item
+		.content
+			.header
+				a(href='#{global.mountPoint}/post/#{post.url}') #{post.title}
+			.description
+				| #{post.view}
+				a(href='#{global.mountPoint}/post/#{post.url}') #{dict.readMore}
+			.extra
+				each tag in post.tags
+					.ui.tag.label tag
+
+block body
+	h1 #{post.title}
+	| !{post.text}
+	br
+	| #{dict.fmtDate(post.date)}
+	.ui.right.tag.labels
+		each tag in post.tags
+			.ui.label tag
+	- if(global.plugins.dynamic !== undefined)
+		br
+		.ui.labeled.button
+			.ui.button#btnLike
+				i.thumbs.up.icon
+			.ui.basic.left.pointing.label#tagLike #{dict.fmtNum(post.likes)}
+		.ui.labeled.button
+			.ui.button#btnDislike
+				i.thumbs.down.icon
+			.ui.basic.left.pointing.label#tagDislike #{dict.fmtNum(post.dislikes)}
+		.ui.comments
+			each comment in post.pluginsData.dynamic.comments
+				.comment
+					.avatar
+						img(src=comment.gravatar)
+					.content
+						.author
+							- if(comment.name !== undefined)
+								| #{comment.name}
+							| (#{comment})
+						.metadata
+							span.date #{dict.fmtDate(comment.time)}
+						.text comment.body

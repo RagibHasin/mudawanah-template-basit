@@ -1,0 +1,27 @@
+html(lang=locale.locale)
+	head
+		link(
+      		rel='stylesheet'
+      		type='text/css'
+      		href='blog/assets/semantic/dist/semantic.min.css')
+		script(
+      		src='https://code.jquery.com/jquery-3.1.1.min.js'
+      		integrity='sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8='
+      		crossorigin='anonymous')
+    	script(src='blog/assets/semantic/dist/semantic.min.js')
+    	block head
+  	body
+    	.ui.secondary.menu
+      		h1 #{locale.blogTitle}
+      		a.item #{dict.home}
+      		a.item #{dict.about}
+      		- if(plugins.dynamic !== undefined)
+        		.right.menu
+          			.item
+            			.ui.icon.input
+              				input(type='text' placeholder='#{dict.search}...')
+              				i.search.link.icon
+    	block body
+    	block foot
+      		footer
+        		div #{dict.foot}

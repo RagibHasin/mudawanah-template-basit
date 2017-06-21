@@ -1,0 +1,22 @@
+extends _base.pug
+
+block head
+  	title #{locale.blogTitle}
+
+mixin post(post)
+	.item
+		.content
+			.header
+				a(href='#{global.mountPoint}/post/#{post.url}') #{post.title}
+			.description
+				| #{post.view}
+				a(href='#{global.mountPoint}/post/#{post.url}') #{dict.readMore}
+			.extra
+				.ui.tag.labels
+					each tag in post.tags
+						.ui.label tag
+
+block body
+  	.ui.items
+    	each post in posts
+			+post(post)
