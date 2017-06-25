@@ -1,31 +1,20 @@
 extends _base.pug
 
 block head
-	- if(global.plugins.dynamic !== undefined)
+	if usedPlugins.dynamic
 		script !{post.pluginsData.dynamic.injectionScript}
 	title #{post.title}: #{locale.blogTitle}
-	meta(name='keyword') #{post.tags.join()}
-mixin post(post)
-	.item
-		.content
-			.header
-				a(href='#{global.mountPoint}/post/#{post.url}') #{post.title}
-			.description
-				| #{post.view}
-				a(href='#{global.mountPoint}/post/#{post.url}') #{dict.readMore}
-			.extra
-				each tag in post.tags
-					.ui.tag.label tag
+	meta(name='keyword' content=post.tags.join())
 
 block body
 	h1 #{post.title}
-	| !{post.text}
+	| !{text}
 	br
 	| #{dict.fmtDate(post.date)}
 	.ui.right.tag.labels
 		each tag in post.tags
-			.ui.label tag
-	- if(global.plugins.dynamic !== undefined)
+			.ui.label #{tag}
+	if usedPlugins.dynamic
 		br
 		.ui.labeled.button
 			.ui.button#btnLike

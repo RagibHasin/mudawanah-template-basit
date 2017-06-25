@@ -1,27 +1,48 @@
 html(lang=locale.locale)
 	head
+		meta(name='viewport'
+			content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
 		link(
-      		rel='stylesheet'
-      		type='text/css'
-      		href='blog/assets/semantic/dist/semantic.min.css')
+			rel='stylesheet'
+			type='text/css'
+			href=resolve('/assets/semantic.min.css'))
+		link(
+			rel='stylesheet'
+			type='text/css'
+			href=resolve('/assets/hilight.css'))
 		script(
-      		src='https://code.jquery.com/jquery-3.1.1.min.js'
-      		integrity='sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8='
-      		crossorigin='anonymous')
-    	script(src='blog/assets/semantic/dist/semantic.min.js')
-    	block head
-  	body
-    	.ui.secondary.menu
-      		h1 #{locale.blogTitle}
-      		a.item #{dict.home}
-      		a.item #{dict.about}
-      		- if(plugins.dynamic !== undefined)
-        		.right.menu
-          			.item
-            			.ui.icon.input
-              				input(type='text' placeholder='#{dict.search}...')
-              				i.search.link.icon
-    	block body
-    	block foot
-      		footer
-        		div #{dict.foot}
+			src='https://code.jquery.com/jquery-3.1.1.min.js'
+			integrity='sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8='
+			crossorigin='anonymous')
+		script(src=resolve('/assets/semantic.min.js'))
+		script !{injectionScript}
+		style
+			|body{display:flex;flex-direction:column;height:100%;}
+			|header,footer{flex: none;}
+			|#main{flex: 1 0 auto;padding: var(--space) var(--space) 0;width: 100%;}
+			|#main::after{content: '\00a0';display: block;margin-top: var(--space);height: 0px;visibility: hidden;}
+		block head
+	body
+		.ui.text.container#main
+			.ui.large.text.menu
+				a.header.item(href=resolve('/')) #{locale.blogTitle}
+				a.item(href=resolve('/')) #{dict.home}
+				each page in global.pages
+					a.item(href=resolve('/' + page)) #{dict[page]}
+				.right.menu
+					if usedPlugins.dynamic
+						.item
+							.ui.icon.input
+								input(type='text' placeholder='#{dict.search}...')
+								i.search.link.icon
+					if translations
+						.ui.dropdown.item
+							i.world.icon
+							.menu#mudawanahTranslate
+								each val, idx in translations
+									a.item(onclick='return mudawanah.setLocale("'+idx+'");' href=val) #{global.locales[idx]}
+			script $('.ui.dropdown').dropdown()
+			block body
+		footer.ui.text.container
+			block foot
+				div !{dict.foot}
