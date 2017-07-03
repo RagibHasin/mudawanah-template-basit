@@ -13,11 +13,13 @@ mixin post(post)
 				| #{post.view}
 				a(href=resolve('/post/'+post.url[0])) #{dict.readMore}
 			.extra
+				| #{dict.fmtDate(post.date)}
 				.ui.tag.labels
 					each tag in post.tags
 						.ui.label #{tag}
+	br
 
 block body
-		.ui.items
-			each post in posts
-				+post(post)
+	.ui.items
+		each post in posts
+			+post(post)

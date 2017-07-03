@@ -5,17 +5,16 @@ html(lang=locale.locale)
 		link(
 			rel='stylesheet'
 			type='text/css'
-			href=resolve('/assets/semantic.min.css'))
+			href=asset('semantic.min.css'))
 		link(
 			rel='stylesheet'
 			type='text/css'
-			href=resolve('/assets/hilight.css'))
+			href=asset('hilight.css'))
 		script(
 			src='https://code.jquery.com/jquery-3.1.1.min.js'
 			integrity='sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8='
 			crossorigin='anonymous')
-		script(src=resolve('/assets/semantic.min.js'))
-		script !{injectionScript}
+		script(src=asset('semantic.min.js'))
 		style
 			|body{display:flex;flex-direction:column;height:100%;}
 			|header,footer{flex: none;}
@@ -40,9 +39,10 @@ html(lang=locale.locale)
 							i.world.icon
 							.menu#mudawanahTranslate
 								each val, idx in translations
-									a.item(onclick='return mudawanah.setLocale("'+idx+'");' href=val) #{global.locales[idx]}
+									a.item(href=val) #{global.locales[idx]}
 			script $('.ui.dropdown').dropdown()
 			block body
+			br
 		footer.ui.text.container
 			block foot
 				div !{dict.foot}
